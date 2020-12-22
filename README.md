@@ -14,7 +14,7 @@ Data Science guides, projects and trainning
 * [Jupyter quick ref](https://nbviewer.jupyter.org/github/justmarkham/python-reference/blob/master/reference.ipynb)
 * [Data Analysis python](https://www.datascienceacademy.com.br/pages/curso-python-fundamentos-para-analise-de-dados)
 * [Python env with anaconda](https://machinelearningmastery.com/setup-python-environment-machine-learning-deep-learning-anaconda/)
-
+* [monthly guide](https://www.analyticsvidhya.com/blog/2020/12/a-super-useful-month-by-month-plan-to-master-data-science-in-2021/)
 
 ## References
 * [SODA projects used as base of study notebooks](https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US)
