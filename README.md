@@ -3,6 +3,14 @@ Data Science guides, projects and trainning
 
 
 ## Guides and quick refs
+* [Tracker](https://www.notion.so/Data-Science-learning-tracker-0d3c503280d744acb1b862a1ddd8344e)
+* [Basic Stats](https://www.youtube.com/watch?v=xxpc-HPKN28&ab_channel=freeCodeCamp.org)
+* hypothesis tests, A/B tests, business metrics, confidence interval, p-value, alpha values;
+* [GCP Certificate](https://cloud.google.com/certification/data-engineer)
+* [AWS ML Certificate](https://aws.amazon.com/certification/certified-machine-learning-specialty/)
+* [Datacamp](https://www.datacamp.com/onboarding)
+* [Kagle courses](https://www.kaggle.com/learn/overview)
+* [Quandle python tools](https://www.quandl.com/tools/python)
 * [Machine Learning Mastery](https://machinelearningmastery.com/start-here/#getstarted)
 * [Socrata Open Data API (soda)](https://dev.socrata.com/consumers/getting-started.html)
 * [Datasets](https://www.kaggle.com/jilkothari/finance-accounting-courses-udemy-13k-course)
