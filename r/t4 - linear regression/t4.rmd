@@ -1,0 +1,376 @@
+---
+title: "Data Science - Aprofundamento: trilha 4"
+author: "Rafael Garcia de Lima"
+subtitle: "Linear Regression"
+date: '2021'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Importação das bibliotecas
+```{r warning=FALSE, message=FALSE}
+library(DT);
+library(gvlma);
+library(dplyr);
+library(ggpubr);
+library(ggplot2);
+library(dataMeta);
+library(tidyverse);
+```
+
+# Problema 1
+## Iniciando os dados
+```{r}
+y <- c(23, 21, 20, 19, 17, 16, 16, 15, 13);
+x <- c(3.5, 3.7, 3.8, 4.2, 4.6, 4.7, 4.9, 5.2, 5.5);
+```
+
+## Criando data frame
+```{r}
+df <- data.frame(tempplant = x, waste=y);
+df;
+```
+
+## a. Gráfico de dispersão
+Gráfico de disperção entre o tempo de plantio e a perda
+```{r}
+disp <- ggplot(df, aes(x=tempplant, y=waste)) + geom_point() + labs(x="Time from plantation", y="Waste") + theme_bw();
+disp;
+```
+
+## b. Modelo de regressão linear
+```{r}
+fit <- lm(waste ~ tempplant, data = df);
+fit;
+```
+
+## c. análise do modelo
+### c.i Sumário do modelo
+```{r}
+summary(fit);
+```
+
+### c.ii Gráficos de diagnóstico
+```{r}
+par(mfrow = c(2, 2));
+plot(fit);
+```
+
+#### Topo-esquerda
+Sem estruturas ou padrões, o ajuste da reta é necessário
+#### Topo-direita
+Os erros são aleatóriamente distrubuídos
+
+```{r}
+fit.df <- as.data.frame(residuals(fit));
+names(fit.df) <- c("residuals");
+aResiduals <- ggplot(fit.df, aes(residuals)) +
+  geom_histogram(fill="blue", color="black", stat = "bin", bins = 10) +
+  theme_pubr() + labs_pubr() + xlab("Residuals") + ylab("Frequency") +
+  theme(plot.caption = element_text(hjust = 0));
+aResiduals;
+```
+
+## d. Adição da reta de regressão
+```{r}
+cofs <- coef(fit);
+disp <- disp + geom_abline(aes(intercept=cofs[1], slope=cofs[2]));
+disp
+```
+
+# Problema 2
+## a. Importação e sumário
+```{r}
+pib <- read.csv("pib_gapminder.csv");
+summary(pib);
+```
+
+## b. Estrutura dos dados
+```{r}
+str(pib);
+```
+
+## c. Classificação das variáveis
+### pais: qualitativa nominal
+### ano: quantitativa contínua
+### pop: quantitativa discreta
+### continente: qualitativa nominal
+### expVida: quantitativa discreta
+### pibPercap: quantitativa contínua
+
+## d. Sumário dos dados
+```{r}
+summary(pib);
+```
+
+## e. Tabelas de frequência absoluta e frequência relativa
+```{r}
+data <- pib %>% select(continente) %>% 
+  group_by(continente) %>%
+  summarise(absF=n()) %>%
+  mutate(relF = 100 * absF / sum(absF));
+data;
+```
+
+## f. Gráfico de barras da tabela de frequência absoluta
+```{r}
+barAbsF <- ggplot(data, aes(continente, absF)) +
+  geom_bar(stat="identity", color="blue", fill="grey") +
+  labs(x="Continent", y="Frequency") + 
+  theme_bw();
+barAbsF;
+```
+
+## g. Gráfico de dispersão entre expectativa de vida e pib per capita
+```{r}
+dispPibExp <- ggplot(pib, aes(expVida, pibPercap, fill=continente)) +
+  theme_bw() +
+  labs(x="Expectativa de vida", y="PIB") +
+  facet_wrap(~ continente, scale="free") +
+  geom_point(size=2, shape=21, color="blue")
+dispPibExp;
+```
+
+## h. Adição de colunas logarítmicas a base de dados
+```{r}
+pib$lpibPercap <- log(pib$pibPercap);
+pib$lexpVida <- log(pib$expVida);
+```
+
+## i. Gráfico de dispersão da relação das novas colunas
+```{r}
+displPiblExp <- ggplot(pib, aes(lexpVida, lpibPercap, fill=continente)) +
+  theme_bw() +
+  labs(x="Log Expectativa de vida", y="Log PIB") +
+  facet_wrap(~ continente, scale="free") +
+  geom_point(size=2, shape=21, color="green");
+displPiblExp;
+```
+
+## j. Ajuste manual do modelo linear
+```{r}
+lMod <- ggplot(pib, aes(x=lpibPercap, y=lexpVida)) +
+  geom_point(color = "red", fill = "blue") +
+  xlab("Log Pib Per Capita") + ylab("Log Expectativa de Vida") +
+  theme_pubr(legend = "right") +
+  labs_pubr() +
+  theme(plot.caption = element_text(hjust = 0));
+
+sx <- sum(pib$lpibPercap);
+ssx <- sum((pib$lpibPercap - mean(pib$lpibPercap))^2);
+
+sy <- sum(pib$lexpVida);
+ssy <- sum((pib$lexpVida - mean(pib$lexpVida))^2);
+
+ssxy <- sum((pib$lpibPercap - mean(pib$lpibPercap)) * (pib$lexpVida - mean(pib$lexpVida)));
+
+b1 <- ssxy / ssx;
+b0 <- mean(pib$lexpVida) - b1 * mean(pib$lpibPercap);
+
+lMod <- lMod + geom_abline(intercept=b0, slope=b1, color="blue");
+lMod;
+```
+
+## k. Análises de regressão
+```{r}
+fit <- lm(lexpVida ~ lpibPercap, data = pib);
+```
+### k.i Gráficos de diagnóstico
+```{r}
+par(mfrow = c(2, 2))
+plot(fit);
+```
+
+### k.ii Avaliação do sumario do modelo
+```{r}
+summary(fit);
+```
+
+### k.iii Poder de explicação do modelo
+##### shapiro-wilk test para validação da normalização do modelo
+```{r}
+shapiro.test(residuals(fit));
+```
+
+##### Gráfico de histograma dos resíduos do modelo, avaliando a normalização
+```{r}
+fit.df <- as.data.frame(residuals(fit));
+names(fit.df) <- c("residuals");
+aResiduals <- ggplot(fit.df, aes(residuals)) +
+  geom_histogram(fill="blue", color="black", stat = "bin", bins = 10) +
+  theme_pubr() + labs_pubr() + xlab("Residuals") + ylab("Frequency") +
+  theme(plot.caption = element_text(hjust = 0));
+aResiduals;
+```
+
+> Apesar da significância nas variáveis, os gráficos de diagnóstico e o teste shapiro-wilk mostram que não existe distribuição normal.
+
+# Problema 3
+## importando os dados de autos
+```{r}
+autos <- read.csv("autos.csv");
+```
+
+## a.
+```{r}
+varDesc <- c(
+  "Fabricante", "Tipo de combustível", "Combustão interna", "Número de portas", "Tipo de chassis", "Tração", "Localização do motor", "Base de rodas", "Comprimento", "Largura", "Altura", "Peso total", "Tipo de motor", "Quantidade de cilindros", "Tamanho do motor", "Sistema de combustão", "Diâmetro dos cilindros", "Tipo de pistão", "Raio de compressão do pistão", "Cavalos", "Número máximo de RPM", "Gasto médio de combustível na cidade", "Gasto médio de combustível em avenida", "Preço"
+);
+varType <- c(1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0);
+autosLinker <- build_linker(my.data=autos, variable_description=varDesc, variable_type=varType);
+autosDict <- build_dict(
+  my.data = autos,
+  linker = autosLinker,
+  option_description = NULL,
+  prompt_varopts = FALSE
+);
+
+knitr::kable(autosDict, format='html', caption='');
+```
+
+## b.
+```{r}
+str(autos);
+```
+
+## c.
+### c.i
+```{r}
+summary(autos);
+```
+
+### c.ii
+```{r}
+table(autos$make);
+```
+
+### c.iii
+#### Cavalos x Fabricante
+```{r}
+hpMK <- ggplot(autos, aes(horsepower, make)) +
+  theme_bw() +
+  geom_boxplot(color="grey") +
+  labs(x="Horsepower", y="Maker") + 
+  stat_summary(fun="mean", geom="point", shape=1, size=2, color="black");
+hpMK;
+```
+
+#### Gasto de combustível na cidade x Fabricante
+```{r}
+cmMK <- ggplot(autos, aes(city.mpg, make)) +
+  theme_bw() +
+  geom_boxplot(color="grey") +
+  labs(x="City miles per gallon", y="Maker") + 
+  stat_summary(fun="mean", geom="point", shape=1, size=2, color="black");
+cmMK;
+```
+
+#### Gasto de combustível na pista x Fabricante
+```{r}
+hmMK <- ggplot(autos, aes(highway.mpg, make)) +
+  theme_bw() +
+  geom_boxplot(color="grey") +
+  labs(x="Highway miles per gallon", y="Maker") +
+  stat_summary(fun="mean", geom="point", shape=1, size=2, color="black");
+hmMK;  
+```
+
+#### Cavalos x Gasto de combustível na cidade
+```{r}
+hpCM <- ggplot(autos, aes(horsepower, city.mpg)) +
+  theme_bw() +
+  geom_point() +
+  labs(x="Horsepower", y="City gallons per mile");
+hpCM;
+```
+
+#### Cavalos x Gasto de combustível na pista
+```{r}
+hpHM <- ggplot(autos, aes(horsepower, highway.mpg)) +
+  theme_bw() +
+  geom_point() +
+  labs(x="Horsepower", y="Highway gallons per mile");
+hpHM;
+```
+
+#### Preço x Fabricante
+```{r}
+priceMk <- ggplot(autos, aes(price, make)) +
+  theme_bw() +
+  geom_boxplot(color="grey") +
+  labs(x="Price", y="Maker");
+priceMk;
+```
+
+## d. Regressão linear da potência com os preços
+```{r}
+fitPriceHP <- lm(price ~ horsepower, data=autos);
+cofsFPHP <- coef(fitPriceHP);
+hpPrice <- ggplot(autos, aes(horsepower, price)) +
+  geom_point() +
+  labs(x="Horsepower", y="Price");
+
+hpPrice <- hpPrice + geom_abline(intercept=cofsFPHP[1], slope=cofsFPHP[2], color="blue");
+hpPrice;
+```
+
+## e. Análises da regressão
+### e.i Gráficos de diagnóstico
+```{r}
+par(mfrow = c(2, 2))
+plot(fitPriceHP);
+```
+
+#### Gráfico dos resíduos
+```{r}
+fitPriceHP.df <- as.data.frame(residuals(fitPriceHP));
+names(fitPriceHP.df) <- c("residuals");
+aResiduals <- ggplot(fitPriceHP.df, aes(residuals)) +
+  geom_histogram(fill="blue", color="black", stat = "bin", bins = 10) +
+  theme_pubr() + labs_pubr() + xlab("Residuals") + ylab("Frequency") +
+  theme(plot.caption = element_text(hjust = 0));
+aResiduals;
+```
+
+### e.ii Sumário da regressão
+```{r}
+summary(fitPriceHP)
+```
+
+## f. Resultados do ajuste
+### f.i
+O intercept é -4630.70, valor incoerente dado ao tipo da variável preço.
+```{r}
+fitPriceHP;
+```
+```{r}
+gvlma(fitPriceHP)
+```
+
+### f.ii
+O modelo pode ser corrigido pela aplicação do log na variável explicativa (price).
+```{r}
+logFitHP <- lm(log(price) ~ horsepower, data=autos)
+logFitHP
+```
+
+```{r}
+gvlma(logFitHP)
+```
+```{r}
+par(mfrow = c(2, 2))
+plot(logFitHP)
+```
+```{r}
+summary(logFitHP)
+```
+É possível ver uma leve melhora no R² ajustado, melhorando a explicação do modelo.
+
+## g. A influência da potência no preço
+Quanto maior a potência, mais caro o carro, isso é visível em como a regressão fica e seguindo a faixa de erro do Normal Q-Q, onde os erros são mais aparentes apenas no fim da distribuição, o p-value não mostra um valor significativa para a hipótese nula, logo é possível afirmar que as variáveis possuem relação, apesar do R quadrado ajustado paresentar um valor um tanto quanto baixo. Contudo, a relação do preço com a potência, seguindo o resultado de 0.65 do R² ajustado, ainda mostra que outras variáveis podem influenciar no preço final.

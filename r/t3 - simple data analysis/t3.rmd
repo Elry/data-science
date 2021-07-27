@@ -1,0 +1,353 @@
+---
+title: "Data Science - Aprofundamento: trilha 3"
+author: "Rafael Garcia de Lima"
+subtitle: "Simple Data Analysis"
+date: '2021'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+```{r warning=FALSE, message=FALSE}
+library(dplyr);
+library(ggplot2);
+```
+
+## Dados
+```{r}
+data(diamonds);
+dds <- diamonds;
+```
+
+## 1. Estrutura do conjunto de dados
+```{r}
+str(dds);
+```
+
+## 2. Exploração da parte final e inicial do conjunto de dados
+```{r}
+head(dds);
+tail(dds);
+```
+
+## 3. Sumário estatístico
+```{r}
+summary(dds);
+```
+
+## 4. Resultado summary()
+A função summary explicita os dados contidos no output da função str(), sendo possível ver as variáveis numéricas e categoricas desta forma
+
+## 5. Exploração, simples, da variável price
+```{r}
+head(dds$price);
+tail(dds$price);
+mean(dds$price);
+summary(dds$price);
+```
+
+## 6. Distribuição, por meio de histogram e contagem, da variável price
+```{r}
+priceCount <- dds %>% count(price);
+priceCountGraph <- ggplot(dds, aes(price)) +
+  geom_histogram(color="grey", fill="green", alpha=.5, bins=100L) +
+  labs(title="Price by amount", subtitles="Price Analysis", x="Price", y="Amount") +
+  geom_vline(aes(xintercept=mean(price)), color="blue", linetype="dashed", size=1);
+
+priceCount;
+priceCountGraph;
+```
+
+## 7. Exploração das variáveis  carat, cut, color, clarity, x, y, z, depth e table
+### Carat
+```{r}
+head(dds$carat);
+tail(dds$carat);
+mean(dds$carat);
+summary(dds$carat);
+caratHist <- ggplot(dds, aes(carat)) +
+  geom_histogram(color="black", fill="grey", alpha=.5) +  
+  geom_vline(aes(xintercept=mean(carat)), color="blue", linetype="dashed", size=1) +
+  labs(title="Carat Amount", subtitles="Descritive Analysis", x="Carat", y="Amount");
+
+caratHist;
+```
+
+### Cut
+```{r}
+head(dds$cut);
+tail(dds$cut);
+summary(dds$cut);
+cutCount <- dds %>% count(cut);
+cutCountGraph <- ggplot(dds, aes(x=cut)) +
+  coord_flip() +  
+  stat_count(width=1, colour="green", geom="bar") +
+  labs(title="Cut count", subtitles="Descritive Analysis", x="Cut", y="Amount") +
+  geom_text(aes(y=..count.., label=..count..), stat="count", color="white", hjust=1.0, size=4);
+
+cutCount;
+cutCountGraph;
+```
+
+### Color
+```{r}
+head(dds$color);
+tail(dds$color);
+summary(dds$color);
+colorCount <- dds %>% count(color);
+colorCountGraph <- ggplot(dds, aes(x=color)) +
+  coord_flip() +
+  stat_count(width=1, colour="green", geom="bar") +
+  labs(title="Color count", subtitles="Descritive Analysis", x="Cut", y="Amount") +
+  geom_text(aes(y=..count.., label=..count..), stat="count", color="white", hjust=1.0, size=4);
+
+colorCount;
+colorCountGraph;
+```
+
+### Clarity
+```{r}
+head(dds$clarity);
+tail(dds$clarity);
+summary(dds$clarity);
+clarityCount <- dds %>% count(clarity);
+clarityCountGraph <- ggplot(dds, aes(clarity)) +
+  coord_flip() +
+  stat_count(width=1, colour="green", geom="bar") +
+  labs(title="Clarity count", subtitles="Descritive Analysis", x="Cut", y="Amount") +  
+  geom_text(aes(y=..count.., label=..count..), stat="count", color="white", hjust=1.0, size=4);
+
+clarityCount;
+clarityCountGraph;
+```
+
+### X
+```{r}
+head(dds$x);
+tail(dds$x);
+mean(dds$x);
+summary(dds$x);
+xGraph <- ggplot(dds, aes(x)) +
+  geom_histogram(color="black", fill="blue", alpha=.5) +
+  labs(title="x Amount", subtitles="Descritive Analysis", x="x", y="Amount") +
+  geom_vline(aes(xintercept=mean(x)), color="red", linetype="dashed", size=1);
+
+xGraph;
+```
+
+### Y
+```{r}
+head(dds$y);
+tail(dds$y);
+mean(dds$y);
+summary(dds$y);
+yGraph <- ggplot(dds, aes(y)) +
+  geom_histogram(color="black", fill="blue", alpha=.5) +
+  labs(title="Y Amount", subtitles="Descritive Analysis", x="Y", y="Amount") +
+  geom_vline(aes(xintercept=mean(y)), color="blue", linetype="dashed", size=1);
+
+yGraph;
+```
+
+### Z
+```{r}
+head(dds$z);
+tail(dds$z);
+mean(dds$z);
+summary(dds$z);
+zGraph <- ggplot(dds, aes(z)) +
+  geom_histogram(color="black", fill="blue", alpha=.5) +
+  labs(title="Z Amount", subtitles="Descritive Analysis", x="Z", y="Amount") +
+  geom_vline(aes(xintercept=mean(z)), color="blue", linetype="dashed", size=1);
+
+zGraph;
+```
+
+### Depth
+```{r}
+head(dds$depth);
+tail(dds$depth);
+mean(dds$depth);
+summary(dds$depth);
+depthCount <- dds %>% count(depth);
+depthHisto <- ggplot(dds, aes(depth)) +
+  geom_histogram(color="black", fill="blue", alpha=.5) +
+  geom_vline(aes(xintercept=mean(depth)), color="blue", linetype="dashed", size=1) +
+  labs(title="Depth Amount", subtitles="Descritive Analysis", x="Depth", y="Amount");
+depthCountGraph <- ggplot(dds, aes(depth)) +
+  stat_count(width=1, colour="green", geom="bar") +
+  labs(title="Depth count", subtitles="Descritive Analysis", x="Depth", y="Amount") +
+  geom_text(aes(y=..count.., label=..count..), stat="count", color="white", hjust=1.0, size=1);
+
+depthCount;
+depthHisto;
+depthCountGraph;
+```
+
+### TABLE
+```{r}
+head(dds$table);
+tail(dds$table);
+mean(dds$table);
+summary(dds$table);
+tableGraph <- ggplot(dds, aes(table)) +
+  geom_histogram(color="black", fill="blue", alpha=.5) +  
+  geom_vline(aes(xintercept=mean(table)), color="blue", linetype="dashed", size=1) +
+  labs(title="Table Amount", subtitles="Descritive Analysis", x="Table", y="Amount");
+
+tableGraph;
+```
+
+## 8. Análise de outliers e boxplot das variáveis numéricas
+### X
+```{r}
+xBoxplot <- ggplot(dds, aes(x)) +
+  coord_flip() +
+  scale_color_brewer(palette="Dark2") +
+  labs(title="Numeric Analysis", subtitles="X", x="X", y="") +
+  geom_boxplot(outlier.colour="blue", outlier.size=2, fill='grey', color='black');
+
+xBoxplot;
+```
+
+### Y
+```{r}
+yBoxplot <- ggplot(dds, aes(y)) +
+  coord_flip() +
+  scale_color_brewer(palette="Dark2") +
+  labs(title="Numeric Analysis", subtitles="Y", x="Y", y="") +
+  geom_boxplot(outlier.colour="blue", outlier.size=2, fill='grey', color='black');
+
+yBoxplot;
+```
+
+### Z
+```{r}
+zBoxplot <- ggplot(dds, aes(z)) +
+  coord_flip() +
+  scale_color_brewer(palette="Dark2") +
+  labs(title="Numeric Analysis", subtitles="Z", x="Z", y="") +
+  geom_boxplot(outlier.colour="blue", outlier.size=2, fill='grey', color='black');
+
+zBoxplot;
+```
+
+### Carat
+```{r}
+caratBoxplot <- ggplot(dds, aes(carat)) +
+  coord_flip() +
+  scale_color_brewer(palette="Dark2") +
+  labs(title="Numeric Analysis", subtitles="Carat", x="Carat", y="") +
+  geom_boxplot(outlier.colour="blue", outlier.size=2, fill='grey', color='black');
+
+caratBoxplot;
+```
+
+### Price
+```{r}
+priceBoxplot <- ggplot(dds, aes(price)) +
+  coord_flip() +
+  scale_color_brewer(palette="Dark2") +
+  labs(title="Numeric Analysis", subtitles="Price", x="Price", y="") +
+  geom_boxplot(outlier.colour="blue", outlier.size=2, fill='grey', color='black');
+
+priceBoxplot;
+```
+
+### Depth
+```{r}
+depthBoxplot <- ggplot(dds, aes(depth)) +
+  coord_flip() +
+  scale_color_brewer(palette="Dark2") +
+  labs(title="Numeric Analysis", subtitles="Depth", x="Depth", y="") +
+  geom_boxplot(outlier.colour="blue", outlier.size=2, fill='grey', color='black');
+
+depthBoxplot;
+```
+
+### Table
+```{r}
+tableBoxplot <- ggplot(dds, aes(table)) +
+  coord_flip() +
+  scale_color_brewer(palette="Dark2") +
+  labs(title="Numeric Analysis", subtitles="Table", x="Table", y="") +
+  geom_boxplot(outlier.colour="blue", outlier.size=2, fill='grey', color='black');
+
+tableBoxplot;
+```
+
+## 9. Facetamento dos dados com variáveis categóricas
+### Facetamento - Cut
+#### Cut x Depth x Color
+```{r}
+cutDepthColor <- ggplot(dds, aes(cut, depth, fill=color)) +
+  theme_minimal() +
+  facet_wrap(~ color, scale="free") +
+  geom_boxplot(color="grey", notch=TRUE) +
+  stat_summary(fun="mean", geom="point", shape=1, size=2, color="black") +
+  labs(title="Categorical analysis", subtitles="Cut x Depth x Color", x="Cut", y="Depth");
+
+cutDepthColor;
+```
+#### Cut x Depth x Clarity
+```{r}
+cutDepthClarity <- ggplot(dds, aes(cut, depth, fill=clarity)) +
+  theme_minimal() +
+  geom_boxplot(color="grey") +
+  facet_wrap(~ clarity, scale="free") +
+  stat_summary(fun="mean", geom="point", shape=1, size=2, color="black") +
+  labs(title="Categorical analysis", subtitles="Cut x Depth x Clarity", x="Cut", y="Depth");
+
+cutDepthClarity;
+```
+
+### Facetamento - Clarity
+#### Clarity x Color
+```{r}
+clarityColor <- boxplot(clarity ~ color, data=dds, xlab='Color', ylab='Clarity', main='Clarity by color', col='yellow');
+
+clarityColor;
+```
+
+### Facetamento - Price
+#### Price x Cut x Clarity
+```{r}
+priceCutClarity <- ggplot(dds, aes(cut, price, fill=clarity)) +
+  theme_minimal() +
+  facet_wrap(~ clarity, scale="free") +
+  geom_boxplot(color="black", notch=TRUE) +
+  stat_summary(fun="mean", geom="point", shape=1, size=2, color="red") + 
+  labs(title="Price Analysis", subtitles="Price x Cut x Clarity", x="Cut", y="Price");
+
+priceCutClarity;
+```
+
+#### Price x Cut x Color
+```{r}
+priceCutColor <- ggplot(dds, aes(cut, price, fill=color)) +
+  theme_minimal() +  
+  facet_wrap(~ color, scale="free") +
+  geom_boxplot(color="black", notch=TRUE) +
+  stat_summary(fun="mean", geom="point", shape=1, size=2, color="white") +
+  labs(title="Price Analysis", subtitles="Price x Cut x Color", x="Cut", y="Price");
+
+priceCutColor;
+```
+
+#### Price x Color x Clarity
+```{r}
+priceColor <- ggplot(dds, aes(color, price, fill=clarity)) +
+  theme_minimal() +  
+  facet_wrap(~ clarity, scale="free") +
+  geom_boxplot(color="black", notch=TRUE) +
+  stat_summary(fun="mean", geom="point", shape=1, size=2, color="white") +
+  labs(title="Price Analysis", subtitles="Price x Color x Clarity", x="Color", y="Price");
+
+priceColor;
+```

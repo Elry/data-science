@@ -1,0 +1,495 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={q1.R},
+  pdfauthor={elry},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{q1.R}
+\author{elry}
+\date{2021-06-26}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(e1071);}
+\FunctionTok{library}\NormalTok{(ggplot2);}
+
+\FunctionTok{RNGversion}\NormalTok{(}\StringTok{"3.5.2"}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in RNGkind("Mersenne-Twister", "Inversion", "Rounding"): non-uniform
+## 'Rounding' sampler used
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1987}\NormalTok{);}
+
+\NormalTok{wdbc }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}
+  \StringTok{"https://archive.ics.uci.edu/ml/machine{-}learning{-}databases/breast{-}cancer{-}wisconsin/wdbc.data"}\NormalTok{,}
+  \AttributeTok{col.names=}\FunctionTok{c}\NormalTok{(}
+    \StringTok{"patientid"}\NormalTok{,}
+    \StringTok{"outcome"}\NormalTok{,}
+    \StringTok{"radius\_mean"}\NormalTok{,}
+    \StringTok{"texture\_mean"}\NormalTok{,}
+    \StringTok{"perimeter\_mean"}\NormalTok{,}
+    \StringTok{"area\_mean"}\NormalTok{,}
+    \StringTok{"smoothness\_mean"}\NormalTok{,}
+    \StringTok{"compactness\_mean"}\NormalTok{,}
+    \StringTok{"concavity\_mean"}\NormalTok{,}
+    \StringTok{"concavepoints\_mean"}\NormalTok{,}
+    \StringTok{"symmetry\_mean"}\NormalTok{,}
+    \StringTok{"fractaldimension\_mean"}\NormalTok{,}
+    \StringTok{"radius\_error"}\NormalTok{,}
+    \StringTok{"texture\_error"}\NormalTok{,}
+    \StringTok{"perimeter\_error"}\NormalTok{,}
+    \StringTok{"area\_error"}\NormalTok{,}
+    \StringTok{"smoothness\_error"}\NormalTok{,}
+    \StringTok{"compactness\_error"}\NormalTok{,}
+    \StringTok{"concavity\_error"}\NormalTok{,}
+    \StringTok{"concavepoints\_error"}\NormalTok{,}
+    \StringTok{"symmetry\_error"}\NormalTok{,}
+    \StringTok{"fractaldimension\_error"}\NormalTok{,}
+    \StringTok{"radius\_worst"}\NormalTok{,}
+    \StringTok{"texture\_worst"}\NormalTok{,}
+    \StringTok{"perimeter\_worst"}\NormalTok{,}
+    \StringTok{"area\_worst"}\NormalTok{,}
+    \StringTok{"smoothness\_worst"}\NormalTok{,}
+    \StringTok{"compactness\_worst"}\NormalTok{,}
+    \StringTok{"concavity\_worst"}\NormalTok{,}
+    \StringTok{"concavepoints\_worst"}\NormalTok{,}
+    \StringTok{"symmetry\_worst"}\NormalTok{,}
+    \StringTok{"fractaldimension\_worst"}\NormalTok{)}
+\NormalTok{);}
+
+\NormalTok{wdbc }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{unclass}\NormalTok{(wdbc),}\AttributeTok{stringsAsFactors=}\NormalTok{T)}
+
+\FunctionTok{head}\NormalTok{(wdbc);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   patientid outcome radius_mean texture_mean perimeter_mean area_mean
+## 1    842517       M       20.57        17.77         132.90    1326.0
+## 2  84300903       M       19.69        21.25         130.00    1203.0
+## 3  84348301       M       11.42        20.38          77.58     386.1
+## 4  84358402       M       20.29        14.34         135.10    1297.0
+## 5    843786       M       12.45        15.70          82.57     477.1
+## 6    844359       M       18.25        19.98         119.60    1040.0
+##   smoothness_mean compactness_mean concavity_mean concavepoints_mean
+## 1         0.08474          0.07864         0.0869            0.07017
+## 2         0.10960          0.15990         0.1974            0.12790
+## 3         0.14250          0.28390         0.2414            0.10520
+## 4         0.10030          0.13280         0.1980            0.10430
+## 5         0.12780          0.17000         0.1578            0.08089
+## 6         0.09463          0.10900         0.1127            0.07400
+##   symmetry_mean fractaldimension_mean radius_error texture_error
+## 1        0.1812               0.05667       0.5435        0.7339
+## 2        0.2069               0.05999       0.7456        0.7869
+## 3        0.2597               0.09744       0.4956        1.1560
+## 4        0.1809               0.05883       0.7572        0.7813
+## 5        0.2087               0.07613       0.3345        0.8902
+## 6        0.1794               0.05742       0.4467        0.7732
+##   perimeter_error area_error smoothness_error compactness_error concavity_error
+## 1           3.398      74.08         0.005225           0.01308         0.01860
+## 2           4.585      94.03         0.006150           0.04006         0.03832
+## 3           3.445      27.23         0.009110           0.07458         0.05661
+## 4           5.438      94.44         0.011490           0.02461         0.05688
+## 5           2.217      27.19         0.007510           0.03345         0.03672
+## 6           3.180      53.91         0.004314           0.01382         0.02254
+##   concavepoints_error symmetry_error fractaldimension_error radius_worst
+## 1             0.01340        0.01389               0.003532        24.99
+## 2             0.02058        0.02250               0.004571        23.57
+## 3             0.01867        0.05963               0.009208        14.91
+## 4             0.01885        0.01756               0.005115        22.54
+## 5             0.01137        0.02165               0.005082        15.47
+## 6             0.01039        0.01369               0.002179        22.88
+##   texture_worst perimeter_worst area_worst smoothness_worst compactness_worst
+## 1         23.41          158.80     1956.0           0.1238            0.1866
+## 2         25.53          152.50     1709.0           0.1444            0.4245
+## 3         26.50           98.87      567.7           0.2098            0.8663
+## 4         16.67          152.20     1575.0           0.1374            0.2050
+## 5         23.75          103.40      741.6           0.1791            0.5249
+## 6         27.66          153.20     1606.0           0.1442            0.2576
+##   concavity_worst concavepoints_worst symmetry_worst fractaldimension_worst
+## 1          0.2416              0.1860         0.2750                0.08902
+## 2          0.4504              0.2430         0.3613                0.08758
+## 3          0.6869              0.2575         0.6638                0.17300
+## 4          0.4000              0.1625         0.2364                0.07678
+## 5          0.5355              0.1741         0.3985                0.12440
+## 6          0.3784              0.1932         0.3063                0.08368
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(wdbc);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    patientid         outcome  radius_mean      texture_mean   perimeter_mean  
+##  Min.   :     8670   B:357   Min.   : 6.981   Min.   : 9.71   Min.   : 43.79  
+##  1st Qu.:   869222   M:211   1st Qu.:11.697   1st Qu.:16.18   1st Qu.: 75.14  
+##  Median :   906157           Median :13.355   Median :18.86   Median : 86.21  
+##  Mean   : 30423820           Mean   :14.120   Mean   :19.31   Mean   : 91.91  
+##  3rd Qu.:  8825022           3rd Qu.:15.780   3rd Qu.:21.80   3rd Qu.:103.88  
+##  Max.   :911320502           Max.   :28.110   Max.   :39.28   Max.   :188.50  
+##    area_mean      smoothness_mean   compactness_mean  concavity_mean   
+##  Min.   : 143.5   Min.   :0.05263   Min.   :0.01938   Min.   :0.00000  
+##  1st Qu.: 420.2   1st Qu.:0.08629   1st Qu.:0.06481   1st Qu.:0.02954  
+##  Median : 548.8   Median :0.09587   Median :0.09252   Median :0.06140  
+##  Mean   : 654.3   Mean   :0.09632   Mean   :0.10404   Mean   :0.08843  
+##  3rd Qu.: 782.6   3rd Qu.:0.10530   3rd Qu.:0.13040   3rd Qu.:0.12965  
+##  Max.   :2501.0   Max.   :0.16340   Max.   :0.34540   Max.   :0.42680  
+##  concavepoints_mean symmetry_mean    fractaldimension_mean  radius_error   
+##  Min.   :0.00000    Min.   :0.1060   Min.   :0.04996       Min.   :0.1115  
+##  1st Qu.:0.02031    1st Qu.:0.1619   1st Qu.:0.05770       1st Qu.:0.2324  
+##  Median :0.03345    Median :0.1792   Median :0.06152       Median :0.3240  
+##  Mean   :0.04875    Mean   :0.1811   Mean   :0.06277       Mean   :0.4040  
+##  3rd Qu.:0.07373    3rd Qu.:0.1956   3rd Qu.:0.06612       3rd Qu.:0.4773  
+##  Max.   :0.20120    Max.   :0.3040   Max.   :0.09744       Max.   :2.8730  
+##  texture_error    perimeter_error    area_error      smoothness_error  
+##  Min.   :0.3602   Min.   : 0.757   Min.   :  6.802   Min.   :0.001713  
+##  1st Qu.:0.8331   1st Qu.: 1.605   1st Qu.: 17.850   1st Qu.:0.005166  
+##  Median :1.1095   Median : 2.285   Median : 24.485   Median :0.006374  
+##  Mean   :1.2174   Mean   : 2.856   Mean   : 40.138   Mean   :0.007042  
+##  3rd Qu.:1.4743   3rd Qu.: 3.337   3rd Qu.: 45.017   3rd Qu.:0.008151  
+##  Max.   :4.8850   Max.   :21.980   Max.   :542.200   Max.   :0.031130  
+##  compactness_error  concavity_error   concavepoints_error symmetry_error    
+##  Min.   :0.002252   Min.   :0.00000   Min.   :0.000000    Min.   :0.007882  
+##  1st Qu.:0.013048   1st Qu.:0.01506   1st Qu.:0.007634    1st Qu.:0.015128  
+##  Median :0.020435   Median :0.02587   Median :0.010920    Median :0.018725  
+##  Mean   :0.025437   Mean   :0.03186   Mean   :0.011789    Mean   :0.020526  
+##  3rd Qu.:0.032218   3rd Qu.:0.04176   3rd Qu.:0.014710    3rd Qu.:0.023398  
+##  Max.   :0.135400   Max.   :0.39600   Max.   :0.052790    Max.   :0.078950  
+##  fractaldimension_error  radius_worst   texture_worst   perimeter_worst 
+##  Min.   :0.0008948      Min.   : 7.93   Min.   :12.02   Min.   : 50.41  
+##  1st Qu.:0.0022445      1st Qu.:13.01   1st Qu.:21.09   1st Qu.: 84.10  
+##  Median :0.0031615      Median :14.96   Median :25.43   Median : 97.66  
+##  Mean   :0.0037907      Mean   :16.25   Mean   :25.69   Mean   :107.13  
+##  3rd Qu.:0.0045258      3rd Qu.:18.77   3rd Qu.:29.76   3rd Qu.:125.17  
+##  Max.   :0.0298400      Max.   :36.04   Max.   :49.54   Max.   :251.20  
+##    area_worst     smoothness_worst  compactness_worst concavity_worst 
+##  Min.   : 185.2   Min.   :0.07117   Min.   :0.02729   Min.   :0.0000  
+##  1st Qu.: 515.0   1st Qu.:0.11660   1st Qu.:0.14690   1st Qu.:0.1145  
+##  Median : 685.5   Median :0.13130   Median :0.21185   Median :0.2266  
+##  Mean   : 878.6   Mean   :0.13232   Mean   :0.25354   Mean   :0.2714  
+##  3rd Qu.:1073.5   3rd Qu.:0.14600   3rd Qu.:0.33760   3rd Qu.:0.3814  
+##  Max.   :4254.0   Max.   :0.22260   Max.   :1.05800   Max.   :1.2520  
+##  concavepoints_worst symmetry_worst   fractaldimension_worst
+##  Min.   :0.00000     Min.   :0.1565   Min.   :0.05504       
+##  1st Qu.:0.06473     1st Qu.:0.2504   1st Qu.:0.07141       
+##  Median :0.09984     Median :0.2821   Median :0.08002       
+##  Mean   :0.11434     Mean   :0.2898   Mean   :0.08388       
+##  3rd Qu.:0.16132     3rd Qu.:0.3177   3rd Qu.:0.09206       
+##  Max.   :0.29100     Max.   :0.6638   Max.   :0.20750
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{any}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(wdbc));}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mybreast }\OtherTok{\textless{}{-}}\NormalTok{ wdbc[,}\SpecialCharTok{!}\NormalTok{(}\FunctionTok{names}\NormalTok{(wdbc) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"patientid"}\NormalTok{))];}
+
+\CommentTok{\# Q3 Quais as quantidades de registros Benignos e Malignos? }
+\FunctionTok{table}\NormalTok{(mybreast}\SpecialCharTok{$}\NormalTok{outcome);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   B   M 
+## 357 211
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Anomaly detection}
+\CommentTok{\# outcome to numeric}
+\NormalTok{mybreast}\SpecialCharTok{$}\NormalTok{outcome }\OtherTok{=} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(mybreast}\SpecialCharTok{$}\NormalTok{outcome) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{);}
+
+\CommentTok{\# Separe os dados normais, Benignos dos Malignos}
+\NormalTok{mybreast\_B }\OtherTok{\textless{}{-}}\NormalTok{ mybreast[mybreast}\SpecialCharTok{$}\NormalTok{outcome }\SpecialCharTok{==} \DecValTok{0}\NormalTok{,];}
+\NormalTok{mybreast\_M }\OtherTok{\textless{}{-}}\NormalTok{ mybreast[mybreast}\SpecialCharTok{$}\NormalTok{outcome }\SpecialCharTok{==} \DecValTok{1}\NormalTok{,];}
+
+\CommentTok{\# Check que o nr de linhas bate com os valores B / M }
+\FunctionTok{nrow}\NormalTok{(mybreast\_B); }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 357
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(mybreast\_M);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 211
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{svm }\OtherTok{\textless{}{-}} \FunctionTok{svm}\NormalTok{(}
+\NormalTok{  outcome}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}
+  \AttributeTok{data =}\NormalTok{ mybreast\_B, }
+  \AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{,}
+  \AttributeTok{kernel =} \StringTok{"radial"}\NormalTok{,}
+  \AttributeTok{type =} \StringTok{"one{-}classification"}
+\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in Ops.factor(yorig, ret$fitted): '-' not meaningful for factors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(svm);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## svm(formula = outcome ~ ., data = mybreast_B, kernel = "radial", 
+##     type = "one-classification", scale = TRUE)
+## 
+## 
+## Parameters:
+##    SVM-Type:  one-classification 
+##  SVM-Kernel:  radial 
+##       gamma:  0.03333333 
+##          nu:  0.5 
+## 
+## Number of Support Vectors:  182
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(svm);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## svm(formula = outcome ~ ., data = mybreast_B, kernel = "radial", 
+##     type = "one-classification", scale = TRUE)
+## 
+## 
+## Parameters:
+##    SVM-Type:  one-classification 
+##  SVM-Kernel:  radial 
+##       gamma:  0.03333333 
+##          nu:  0.5 
+## 
+## Number of Support Vectors:  182
+## 
+## 
+## 
+## 
+## Number of Classes: 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predict\_test }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(svm, mybreast\_M);}
+\FunctionTok{table}\NormalTok{(predict\_test);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## predict_test
+## FALSE  TRUE 
+##   209     2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Anomaly Detected (FALSE):\textquotesingle{}}\NormalTok{, }\FunctionTok{table}\NormalTok{(predict\_test)[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(}\FunctionTok{table}\NormalTok{(predict\_test))}\SpecialCharTok{*}\DecValTok{100}\NormalTok{, }\StringTok{\textquotesingle{} \%\textquotesingle{}}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Anomaly Detected (FALSE): 99.05213  %
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{svm2 }\OtherTok{\textless{}{-}} \FunctionTok{svm}\NormalTok{(}
+\NormalTok{  outcome}\SpecialCharTok{\textasciitilde{}}\NormalTok{.,}
+  \AttributeTok{data =}\NormalTok{ mybreast,}
+  \AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{,}
+  \AttributeTok{kernel =} \StringTok{"radial"}
+\NormalTok{);}
+
+\FunctionTok{summary}\NormalTok{(svm2);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## svm(formula = outcome ~ ., data = mybreast, kernel = "radial", scale = TRUE)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  radial 
+##        cost:  1 
+## 
+## Number of Support Vectors:  119
+## 
+##  ( 60 59 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  0 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predict\_test2 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(svm2, mybreast\_M);}
+
+\NormalTok{c\_matrix }\OtherTok{=} \FunctionTok{table}\NormalTok{(predict\_test2, mybreast\_M}\SpecialCharTok{$}\NormalTok{outcome)}
+\FunctionTok{print}\NormalTok{(c\_matrix);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              
+## predict_test2   0   1
+##             0   0   7
+##             1   0 204
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{acc }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(c\_matrix))}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(c\_matrix)}\SpecialCharTok{*}\DecValTok{100}\NormalTok{;}
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Accuracy: \textquotesingle{}}\NormalTok{, acc, }\StringTok{\textquotesingle{} \%\textquotesingle{}}\NormalTok{, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Accuracy:  96.68246  %
+\end{verbatim}
+
+\end{document}

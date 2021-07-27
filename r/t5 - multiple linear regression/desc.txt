@@ -1,0 +1,18 @@
+Problema 1
+Neste exercício vamos fazer uma análise de regressão multivariada com a mesma base de dados autos.csv para tentar prever o preço
+de carro a partir das seguintes variáveis: potência (horsepower), comprimento (length), tamanho do motor (engine.size), consumo
+na cidade (city.mpg).
+
+Utilizando então a base disponibilizada, você deve:
+
+a) Ajustar um modelo de regressão linear sendo price a variável alvo (resposta), como função das demais variáveis citadas acima:
+horsepower, length, engine.size, city.mpg.
+
+b) Realizar a análise do modelo ajustado, avaliando o valor do R-quadrado, a significância estatística de cada parâmetro ajustado
+e a qualidade total do ajuste pela estatística F.
+
+c) Realizar a verificação de aderência do modelo às premissas estatísticas do método dos mínimos quadrados através dos gráficos
+diagnósticos, comentando o gráfico dos resíduos x valores ajustados e o gráfico da curva Normal-QQ.
+
+d) Fazer uma análise dos resultados do ajuste, discorrendo sobre o impacto de cada preditora, significativa do ponto de vista
+estatístico, no preço do carro.

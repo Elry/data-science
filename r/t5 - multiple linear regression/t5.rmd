@@ -1,0 +1,60 @@
+---
+title: "Data Science - Aprofundamento: trilha 5"
+author: "Rafael Garcia de Lima"
+subtitle: "Multiple Linear Regression"
+date: '2021'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Importação das bibliotecas
+```{r warning=FALSE, message=FALSE}
+library(gvlma);
+library(lmtest);
+library(ggplot2);
+```
+
+## importando os dados de autos
+```{r}
+autos <- read.csv("autos.csv");
+```
+
+## A - Modelo de regressão com com price de resposta
+```{r}
+fitMultiPrice <- lm(price ~ horsepower + length + engine.size + city.mpg, data=autos);
+summary(fitMultiPrice)
+```
+
+
+## B - Análise do modelo ajustado
+### B.1 - Ajuste
+```{r}
+fitMultiPrice <- update(fitMultiPrice, . ~ . - city.mpg);
+summary(fitMultiPrice)
+```
+
+### B.2 - Análise
+```{r}
+par(mfrow=c(2,2));
+plot(fitMultiPrice);
+```
+## C - Verificação de aderência
+### C.1 - Hipótese nula de variância constante (homocedasticidade) pelo teste de Breusch-Pagan
+```{r}
+bptest(fitMultiPrice);
+```
+Com isso, rejeita-se a hipótese nula.
+
+```{r}
+summary(gvlma(fitMultiPrice))
+```
+
+## D - Análise dos resultados do ajuste
+```{r}
+```
