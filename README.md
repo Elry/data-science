@@ -8,7 +8,7 @@ Data Science guides, projects and trainning
 * hypothesis tests, A/B tests, business metrics, confidence interval, p-value, alpha values;
 * [GCP Certificate](https://cloud.google.com/certification/data-engineer)
 * [AWS ML Certificate](https://aws.amazon.com/certification/certified-machine-learning-specialty/)
-* [Datacamp](https://www.datacamp.com/onboarding)
+* [Datacamp](https://learn.datacamp.com/)
 * [Kagle courses](https://www.kaggle.com/learn/overview)
 * [Quandle python tools](https://www.quandl.com/tools/python)
 * [Machine Learning Mastery](https://machinelearningmastery.com/start-here/#getstarted)
@@ -23,6 +23,8 @@ Data Science guides, projects and trainning
 * [Data Analysis python](https://www.datascienceacademy.com.br/pages/curso-python-fundamentos-para-analise-de-dados)
 * [Python env with anaconda](https://machinelearningmastery.com/setup-python-environment-machine-learning-deep-learning-anaconda/)
 * [monthly guide](https://www.analyticsvidhya.com/blog/2020/12/a-super-useful-month-by-month-plan-to-master-data-science-in-2021/)
+* [Python DL](https://machinelearningmastery.com/tutorial-first-neural-network-python-keras/)
+* [Python ML](https://machinelearningmastery.com/machine-learning-in-python-step-by-step/)
 
 ## References
 * [SODA projects used as base of study notebooks](https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US)
