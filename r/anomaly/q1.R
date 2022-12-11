@@ -49,18 +49,18 @@ any(is.na(wdbc));
 
 mybreast <- wdbc[,!(names(wdbc) %in% c("patientid"))];
 
-# Q3 Quais as quantidades de registros Benignos e Malignos? 
+# Benign & malignant data
 table(mybreast$outcome);
 
 # Anomaly detection
 # outcome to numeric
 mybreast$outcome = as.factor(as.numeric(mybreast$outcome) - 1);
 
-# Separe os dados normais, Benignos dos Malignos
+# Separating benign from malignant data
 mybreast_B <- mybreast[mybreast$outcome == 0,];
 mybreast_M <- mybreast[mybreast$outcome == 1,];
 
-# Check que o nr de linhas bate com os valores B / M 
+# nr row check for B/M
 nrow(mybreast_B); 
 nrow(mybreast_M);
 

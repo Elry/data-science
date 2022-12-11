@@ -19,32 +19,29 @@ library(dplyr);
 library(ggplot2);
 ```
 
-## Dados
+## Diamonds data
 ```{r}
 data(diamonds);
 dds <- diamonds;
 ```
 
-## 1. Estrutura do conjunto de dados
+## 1. Data structure
 ```{r}
 str(dds);
 ```
 
-## 2. Exploração da parte final e inicial do conjunto de dados
+## 2.Head and Tails info
 ```{r}
 head(dds);
 tail(dds);
 ```
 
-## 3. Sumário estatístico
+## 3. Stats summary
 ```{r}
 summary(dds);
 ```
 
-## 4. Resultado summary()
-A função summary explicita os dados contidos no output da função str(), sendo possível ver as variáveis numéricas e categoricas desta forma
-
-## 5. Exploração, simples, da variável price
+## 5. Price column exploration
 ```{r}
 head(dds$price);
 tail(dds$price);
@@ -52,7 +49,7 @@ mean(dds$price);
 summary(dds$price);
 ```
 
-## 6. Distribuição, por meio de histogram e contagem, da variável price
+## 6. Distribution, by counting and histogram, of price column
 ```{r}
 priceCount <- dds %>% count(price);
 priceCountGraph <- ggplot(dds, aes(price)) +
@@ -64,7 +61,7 @@ priceCount;
 priceCountGraph;
 ```
 
-## 7. Exploração das variáveis  carat, cut, color, clarity, x, y, z, depth e table
+## 7. Exploration of the columns: carat, cut, color, clarity, x, y, z, depth e table
 ### Carat
 ```{r}
 head(dds$carat);
@@ -204,7 +201,7 @@ tableGraph <- ggplot(dds, aes(table)) +
 tableGraph;
 ```
 
-## 8. Análise de outliers e boxplot das variáveis numéricas
+## 8. Outliers and boxplot analysis of numerical columns
 ### X
 ```{r}
 xBoxplot <- ggplot(dds, aes(x)) +
@@ -282,8 +279,8 @@ tableBoxplot <- ggplot(dds, aes(table)) +
 tableBoxplot;
 ```
 
-## 9. Facetamento dos dados com variáveis categóricas
-### Facetamento - Cut
+## 9. Faceting of categorical columns
+### Faceting - Cut
 #### Cut x Depth x Color
 ```{r}
 cutDepthColor <- ggplot(dds, aes(cut, depth, fill=color)) +
@@ -307,7 +304,7 @@ cutDepthClarity <- ggplot(dds, aes(cut, depth, fill=clarity)) +
 cutDepthClarity;
 ```
 
-### Facetamento - Clarity
+### Faceting - Clarity
 #### Clarity x Color
 ```{r}
 clarityColor <- boxplot(clarity ~ color, data=dds, xlab='Color', ylab='Clarity', main='Clarity by color', col='yellow');
@@ -315,7 +312,7 @@ clarityColor <- boxplot(clarity ~ color, data=dds, xlab='Color', ylab='Clarity',
 clarityColor;
 ```
 
-### Facetamento - Price
+### Faceting - Price
 #### Price x Cut x Clarity
 ```{r}
 priceCutClarity <- ggplot(dds, aes(cut, price, fill=clarity)) +
