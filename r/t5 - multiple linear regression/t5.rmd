@@ -13,39 +13,39 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Importação das bibliotecas
+## Libraries
 ```{r warning=FALSE, message=FALSE}
 library(gvlma);
 library(lmtest);
 library(ggplot2);
 ```
 
-## importando os dados de autos
+## Data import
 ```{r}
 autos <- read.csv("autos.csv");
 ```
 
-## A - Modelo de regressão com com price de resposta
+## A - Regression model for price
 ```{r}
 fitMultiPrice <- lm(price ~ horsepower + length + engine.size + city.mpg, data=autos);
 summary(fitMultiPrice)
 ```
 
 
-## B - Análise do modelo ajustado
-### B.1 - Ajuste
+## B - Adjusted model analysis
+### B.1 - Adjusting
 ```{r}
 fitMultiPrice <- update(fitMultiPrice, . ~ . - city.mpg);
 summary(fitMultiPrice)
 ```
 
-### B.2 - Análise
+### B.2 - Analysis
 ```{r}
 par(mfrow=c(2,2));
 plot(fitMultiPrice);
 ```
-## C - Verificação de aderência
-### C.1 - Hipótese nula de variância constante (homocedasticidade) pelo teste de Breusch-Pagan
+## C - Adherence verification
+### C.1 - Null hipothesis of variance (homoscedasticity) Breusch-Pagan test
 ```{r}
 bptest(fitMultiPrice);
 ```
