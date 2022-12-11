@@ -1,0 +1,50 @@
+---
+title: "Data Analytics - Sampling Table"
+author: "Rafael Garcia"
+subtitle: "PassCode problem"
+date: '2022'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+## Libraries
+```{r}
+install.packages("gtools");
+```
+
+# Passcodes have 4 digits, ranging from 0 to 9.
+## a) Possible passcodes
+```{r}
+dim(gtools::permutations(n = 6, r = 4, repeats.allowed = TRUE))[1]
+```
+
+## b) Unique passcodes, 4 distinct digits, repetition not allowed
+```{r}
+dim(gtools::permutations(n = 6, r = 4, repeats.allowed = FALSE))[1]
+```
+
+## c) Ascending passcode, repetition allowed
+```{r}
+uniques = gtools::permutations(n=6, r=4, repeats.allowed = FALSE);
+
+uniques.ascending = apply(uniques, 1, function(x) sort(x));
+
+uniques.ascending = t(uniques.ascending);
+
+uniques.ascending = data.frame(uniques.ascending);
+
+dim(unique(uniques.ascending))[1]
+```
+
+## d) Ascending, but not unique
+```{r}
+passcodes = gtools::permutations(n=6, r=4, repeats.allowed=TRUE);
+
+ascending = apply(passcodes, 1, function(x) sort(x));
+ascending = t(ascending);
+ascending = data.frame(ascending);
+
+dim(unique(ascending))[1]
+```
